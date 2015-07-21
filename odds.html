@@ -1,0 +1,107 @@
+<DOCTYPE HTML!>
+<html lang="en">
+<head>
+  <title>Odds</title>
+  <meta charset="utf-5">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+ 
+<style>
+#container {
+    width: 980px;
+    height: 600px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+span{
+  color:blue;
+}
+</style>
+
+<body>
+<div id='container'>
+  <h2>Instructions</h2>
+  <p>
+  Enter a number between 1 and 5 below. If your guess matches the computer's number, you win the round!
+  </p>
+  <table>
+    <tr><td>Enter Your Guess:  </td><td><input type="text" id="playerGuess"></input></td></tr>
+    <tr><td></td><td><button onclick="startTimer()" id="compareButton">Check Your Guess</button></td></tr>
+    <tr><td><h1>Timer:  </h1></td><td><h1><span id="timer"></span></h1></td></tr>
+    <tr><td><h1>Your Guess:  </h1></td><td><h1><span id="playerGuessHeader"></span></h1></td></tr>
+    <tr><td><h1>Correct Number:  </h1></td><td><h1><span id="rightGuessHeader"></span></h1></td></tr>
+    <tr><td><h1>Right Guesses:  </h1></td><td><h1><span id="rightCountHeader"></span></h1></td></tr>
+    <tr><td><h1>Wrong Guesses:  </h1></td><td><h1><span id="wrongCountHeader"></span></h1></td></tr>
+  </table>
+</div>
+
+</center>
+  <script>
+    var rightCount = 0;
+    var wrongCount = 0;
+    function startTimer(){
+      $('#compareButton').toggle();
+      var count = 4;
+      var myVar = setInterval(function(){myTimer()},1000);
+      function myTimer() {
+          var hit = new Audio('hit.mp3');
+          hit.play();
+          count --;
+          document.getElementById('timer').innerHTML = count;
+          if(count == 0){
+            clearInterval(myVar);
+            compareNumbers();
+          }
+      }
+    }
+
+    function compareNumbers(){
+      var playerGuess = document.getElementById('playerGuess').value;
+      var rightGuess = Math.floor(Math.random() * 5) + 1;
+      if(playerGuess == rightGuess){
+        rightCount ++;
+        $('body').css('background-image', 'url(kidlaugh.gif)');
+        $('#container').css('background-image', 'url(420.gif)');
+        $('body').css('color', 'white');
+        var smoke = new Audio('smoke.mp3');
+        smoke.play();
+        var cheer = new Audio('cheer.mp3');
+        cheer.play();
+        var horns = new Audio('horns.mp3');
+        horns.play();
+        setTimeout(function(){ stopMadness() }, 6000);
+        function stopMadness(){
+          cheer.pause();
+          $('body').css('background-image', 'url()');
+          $('#container').css('background-image', 'url()');
+          $('body').css('color', '');
+        }
+      } else {
+        wrongCount ++;
+        var wrong = new Audio('wrong.mp3');
+        wrong.play();
+      }
+      $('#compareButton').toggle();
+      document.getElementById('timer').innerHTML = '0';
+      document.getElementById('playerGuessHeader').innerHTML = playerGuess;
+      document.getElementById('rightGuessHeader').innerHTML = rightGuess;
+      document.getElementById('rightCountHeader').innerHTML = rightCount;
+      document.getElementById('wrongCountHeader').innerHTML = wrongCount;
+      document.getElementById('playerGuess').value = '';
+    }
+
+    $(document).ready(function() {
+
+    });
+  </script>
+</body>
+
+</html>

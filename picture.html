@@ -1,0 +1,52 @@
+<DOCTYPE HTML!>
+<html lang="en">
+<head>
+  <title>Picture</title>
+  <meta charset="utf-5">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+ 
+
+<body>
+<center>
+  <p>
+    Through a sophisticated internet camera system, we at Mike Industries LLC are able to take your picture from any computer in the world! You don't even have to turn your webcam on! To take your picture, click the button below, make your best smile, and wait until our state of the art timer counts down from three.
+  </p>
+  <p>
+    <img src="placeholder.png" id="picture" style="width: 250px; height:400px;">
+    <h1>Timer: <span id="timer"></span></h1>
+    <button onclick="startTimer()" id="takePicture">Take Your Picture!</button>
+  </p>
+
+
+
+
+
+</center>
+  <script>
+    function startTimer(){
+      $('#takePicture').toggle();
+      var count = 4;
+      var myVar = setInterval(function(){myTimer()},1000);
+      function myTimer() {
+        var hit = new Audio('hit.mp3');
+        hit.play();
+        count --;
+        document.getElementById('timer').innerHTML = count;
+        if(count == 0){
+          clearInterval(myVar);
+          $('#picture').toggle();
+          $('#picture').attr('src', 'monkey.jpg');
+          $('#picture').fadeIn(4000);
+        }
+      }
+    }
+    $(document).ready(function() {
+    });
+  </script>
+</body>
+
+</html>
