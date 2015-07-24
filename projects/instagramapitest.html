@@ -1,11 +1,8 @@
-
-
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="utf-8"/>
 	<title>Instagram Test</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<link href="favicon.ico" rel="icon" type="image/x-icon" />
 </head>
 
 <body>
@@ -14,9 +11,11 @@
 			Enter a tag below and the first 20 posts with that tag will show up below.
 		</h2>
 		Tag: <input type="text" id="tag" />
-		<button id="requestSubmitButton" onClick="request()">Submit</button>
+		<button id="requestSubmitButton" onClick="testJSONRequest()">Submit</button>
 		<button id="clearButton" onClick="clearResults()">Clear Results</button>
 		<br />
+		<br />
+		<!--
 		<h2>
 			Enter a user name below and the first 20 posts by that user will show up below.
 		</h2>
@@ -25,16 +24,40 @@
 		<button id="clearButton" onClick="clearResults()">Clear Results</button>
 		<br />
 		<br />
+		-->
 		<div id="pictureArea"></div>
 	</center>
 
 	<script>
+		function testJSONRequest(){
+			$('#pictureArea').html('');
+			var tag = document.getElementById('tag').value; 
+			$.ajax({
+			    url: 'https://api.instagram.com/v1/tags/' + tag + '/media/recent?client_id=38f894bb615f4494851c7f87891cb085',
+			    dataType: 'jsonp',
+			    type: 'GET',
+			    cache: false,
+			    //data: {client_id: accessToken},
+			    success: function(data){
+			        console.log(data);
+			        for(x in data.data){
+			          $('#pictureArea').append('<a href="' + data.data[x].link + '" target="_blank"><img src="'+ data.data[x].images.low_resolution.url +'"></a>');  
+			        }
+			    },
+			    error: function(data){
+			        console.log(data);
+			    }
+			});
+		}
+
 		function clearResults(){
 			document.getElementById('pictureArea').innerHTML = '';
 			document.getElementById('tag').value = "";
+			document.getElementById('user').value = "";
 		}
 
 		function getUserID(){
+			/*
 			var user = document.getElementById('user').value;
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", "https://api.instagram.com/v1/users/search?q=" + user + "&client_id=38f894bb615f4494851c7f87891cb085", false);
@@ -43,9 +66,27 @@
 			console.log(response);
 			console.log(response.data[0].id);
 			return response.data[0].id;
+			*/
+
+			$.ajax({
+			    url: 'https://api.instagram.com/v1/users/search?q=' + user + '&client_id=38f894bb615f4494851c7f87891cb085',
+			    dataType: 'jsonp',
+			    type: 'GET',
+			    cache: false,
+			    //data: {client_id: accessToken},
+			    success: function(response){
+			        console.log(response);
+			        console.log(response.data);
+			        return response.data[0].id;
+			    },
+			    error: function(data){
+			        console.log(data);
+			    }
+			});
 		}
 
 		function getPostsByUser(){
+			/*
 			document.getElementById('pictureArea').innerHTML = '';
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", "https://api.instagram.com/v1/users/" + getUserID() + "/media/recent?client_id=38f894bb615f4494851c7f87891cb085", false);
@@ -59,6 +100,23 @@
 				//console.log(response.data[i].images.low_resolution.url);
 				document.getElementById('pictureArea').innerHTML += '<a href="' + response.data[i].link + '" target="_blank"><img src="' + response.data[i].images.low_resolution.url +'"></a>';
 			}
+			*/
+			$.ajax({
+			    url: 'https://api.instagram.com/v1/users/' + getUserID() + '/media/recent?client_id=38f894bb615f4494851c7f87891cb085',
+			    dataType: 'jsonp',
+			    type: 'GET',
+			    cache: false,
+			    //data: {client_id: accessToken},
+			    success: function(data){
+			        console.log(data);
+			        for(x in data.data){
+			          $('#pictureArea').append('<img src="'+data.data[x].images.low_resolution.url+'">');  
+			        }
+			    },
+			    error: function(data){
+			        console.log(data);
+			    }
+			});
 		}
 
 		function request(){
