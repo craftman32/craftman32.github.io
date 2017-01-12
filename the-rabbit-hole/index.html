@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+
+    <!-- Sets preview options for Facebook -->
+    <meta property="og:title" content="Find Your Representatives" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="rabbit.png" />
+    <meta property="og:url" content="http://craftman32.github.io/the-rabbit-hole/index.html" />
+    <meta property="og:description" content="Enter your zip code and find the people who represent you in office" />
+
+    <!-- Prevents zooming on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>The Rabbit Hole</title>
+
+    <!-- Bootstrap -->
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+    <!-- Font Awesome -->
+    <script src='https://use.fontawesome.com/44f3b9583e.js'></script>
+    <!-- My shitty js -->
+    <script src="index.js"></script>
+
+    <link href="favicon.ico" rel="icon" type="image">
+  </head>
+
+  <body>
+    <div class="container-fluid text-center">
+      <!--<h1>
+        The Rabbit Hole
+      </h1>-->
+      <img src="rabbit.png" class="img-rounded" />
+
+      <div class="input-group" style="width:250px; margin-left:auto; margin-right:auto;">
+        <input type="text" id="zip" class="form-control" placeholder="zip code" />
+        <span class="input-group-btn">
+          <button onclick="search()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-search"></i> Search
+          </button>
+          <button onclick="clearResults()" class="btn btn-danger">
+            <i class="glyphicon glyphicon-trash"></i> Clear
+          </button>
+        </span>
+      </div>
+
+      <span id="results"></span>
+    </div>
+  </body>
+</html>
